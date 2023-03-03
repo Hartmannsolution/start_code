@@ -1,0 +1,36 @@
+version: '3'
+services:
+  nodejs-server:
+    build:
+      context: ./api
+    ports:
+      - "3080:3080"
+    container_name: node-api
+    volumes:
+       - ./api:/usr/src/app/api
+       - /usr/src/app/api/node_modules
+    links:
+      - mongodb
+    depends_on:
+      - 'mongodb'
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/myapp
+      - PORT=3080
+  mongodb:
+    image: mongo
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - './mongo/data:/data/db'
+
+  react-ui:
+    build:
+      context: ./react_app
+    ports:
+      - "3000:3000"
+    container_name: react-ui
+    stdin_open: true
+    volumes:
+       - ./react_app:/usr/src/app/my-app
+       - /usr/src/app/my-app/node_modules
