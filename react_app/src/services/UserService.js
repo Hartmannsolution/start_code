@@ -3,6 +3,11 @@ export async function getAllUsers() {
     return await response.json();
 }
 
+export async function getAllUsersWithAdress() {
+    const response = await fetch(`/api/userswithaddress`);
+    return await response.json();
+}
+
 export async function getUserById(id) {
     const response = await fetch(`/api/user/${id}`);
     return await response.json();

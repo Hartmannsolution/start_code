@@ -1,6 +1,7 @@
 import React from 'react';
 import { deleteUser } from '../services/UserService';
-export const Users = ({users, doUpdateUser, setNumberOfUsers }) => {
+import ToolTip from './tooltip/ToolTip';
+export const Users = ({users, insertUser, setNumberOfUsers }) => {
 
     if (users.length === 0) return null
 
@@ -12,15 +13,18 @@ export const Users = ({users, doUpdateUser, setNumberOfUsers }) => {
     }
 
     const UserRow = (user,index) => {
-
+        const addressString = user.address? user.address.street + ', ' + user.address.zip + ', ' + user.address.city + ', ' + user.address.country : '';
         return(
               <tr key = {index} className={index%2 === 0?'odd':'even'}>
                   <td>{index+1}</td>
                   <td>{user._id}</td>
-                  <td>{user.name}</td>
+                  <td>
+                    <ToolTip text={user.name} message={addressString}/>
+                    </td>
                   <td>{user.email}</td>
+                  <td>{user.phone?user.phone.no:''}</td>
                   <td>{user.password}</td>
-                  <td><button id={user._id} onClick={doUpdateUser}>edit</button ><button id={user._id} onClick={doDeleteUser}>delete</button></td>
+                  <td><button id={user._id} onClick={insertUser}>edit</button><button id={user._id} onClick={doDeleteUser}>delete</button></td>
               </tr>
           )
     }
@@ -37,6 +41,7 @@ export const Users = ({users, doUpdateUser, setNumberOfUsers }) => {
                     <th>User Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
                     <th>Password</th>
                 </tr>
                 </thead>

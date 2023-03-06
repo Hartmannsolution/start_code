@@ -31,6 +31,19 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
+router.get('/userswithaddress', async (req, res) => {
+    console.log("GETTING USERS: ",User);
+    const persons = await User.find().populate('address');
+    return res.json(persons);
+
+  // User.find((err, users) => {
+  //   if (err) return res.status(500).json({err: err});
+  //   users.populate('address');
+  //   return res.json(users);
+  // });
+});
+
+
 router.get('/address/:id/users', async (req, res) => {
   try {
     const address = await Address.findById(req.params.id).populate('users');
@@ -43,6 +56,8 @@ router.get('/address/:id/users', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+
 
 router.delete('/user/:id', async (req, res) => {
   const userId = req.params.id;
@@ -115,23 +130,44 @@ router.post('/addressuser', async (req, res) => {
   }
 });
 
-router.put('/user/:id', async (req, res) => {
-  const userId = req.params.id;
-  const { name, email, password } = req.body;
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({msg:'User not found'});
-    }
-    user.name = name;
-    user.email = email;
-    user.password = password;
+// router.put('/user/:id', async (req, res) => {
+//   const userId = req.params.id;
+//   const { name, email, password } = req.body;
+//   try {
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({msg:'User not found'});
+//     }
+//     user.name = name;
+//     user.email = email;
+//     user.password = password;
 
-    await user.save();
-    res.send(user);
+//     await user.save();
+//     res.send(user);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({msg:'Server error'});
+//   }
+// });
+router.put('/user/:id', async (req, res) => {
+  const { id } = req.params;
+  const updateDTO = req.body;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    console.log("USER: ",user);
+
+    // Update user object with fields from DTO
+    Object.assign(user, updateDTO);
+
+    // Save updated user object to database
+    const updatedUser = await user.save();
+    res.json(updatedUser);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({msg:'Server error'});
+    res.status(500).json({ error: `Failed to update user: ${err}` });
   }
 });
 

@@ -3,7 +3,7 @@
   width: 100%;
   padding: 2%;
   background-color: rgb(131, 194, 243);
-  color: white;
+  color: rgb(240, 82, 82);
   text-align: center;
 }
 
@@ -21,4 +21,24 @@
 
 .mrgnbtm {
   margin-top: 20px;
+}
+
+.parent {
+  position: relative;
+}
+
+.mytooltip {
+  position: absolute;
+  top: -80%;
+  left: 10%;
+  /* display: inline-block;  */
+  /* border: 1px solid black; */
+  /* transform: translateX(-50%); */
+  background-color: rgb(113, 112, 112);
+  color: rgb(252, 250, 250);
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 300;
+  white-space: nowrap; 
 }

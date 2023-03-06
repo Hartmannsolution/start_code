@@ -32,6 +32,3 @@ Url | Method | Description
 /add | POST | Create new user
 /:id | PUT | Update user by id
 /:id | DELETE | Delete user by id
-# repo auto created
-# repo auto created
-# repo auto created

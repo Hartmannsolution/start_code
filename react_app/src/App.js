@@ -5,54 +5,79 @@ import { Header } from './components/Header'
 import { Users } from './components/Users'
 import { DisplayBoard } from './components/DisplayBoard'
 import FormUser from './components/FormUser'
-import { getAllUsers, createUser, updateUser  } from './services/UserService'
+import {
+  // getAllUsers, 
+  getAllUsersWithAdress,
+  // getUserById,
+  createUser,
+  updateUser
+} from './services/UserService'
+
+const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}};
 
 const App = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(emptyUser);
   const [users, setUsers] = useState([]);
-  const [numberOfUsers, setNumberOfUsers] = useState(0);
+  const [numberOfUsers, setNumberOfUsers] = useState({count:0});
 
-  const doCreateUser = (e) => {
+  const createOrUpdateUser = (e) => {
+    if(user._id) {
+      console.log('update user with id: ', user._id);
+      updateUser(user)
+      .then(response => {
+        setNumberOfUsers({...numberOfUsers});
+      });
+    }
+    else { // create new user if user from the form has no id
     createUser(user)
       .then(response => {
-        setNumberOfUsers((numberOfUsers)=>numberOfUsers + 1);
+        setNumberOfUsers({...numberOfUsers, count: numberOfUsers.count + 1});
       });
-  }
-  const doUpdateUser = (e) => {
-    updateUser(user)
-      .then(response => {
-        setNumberOfUsers((numberOfUsers)=>numberOfUsers + 1);
-      });
+    }
   }
 
-  useEffect(()=>{
-    getAllUsers()
+  const insertUser = (e) => {
+    e.preventDefault();
+    const editUser = users.find(user => user._id === e.target.id);
+    setUser(editUser);
+  }
+
+  useEffect(() => {
+    getAllUsersWithAdress()
       .then(users => {
         setUsers(users);
-        setNumberOfUsers(users.length);
+        setNumberOfUsers({...numberOfUsers, count:users.length});
       });
-  },[numberOfUsers]);
+  }, [numberOfUsers]);
 
   const onChangeForm = (e) => {
     e.preventDefault();
+    if(e.target.name === 'phone') {
+      setUser({ ...user, phone: {...user.phone, no: e.target.value} });
+      return;
+    }
+    if(e.target.name === 'phone_type') {
+      setUser({ ...user, phone: {...user.phone, description: e.target.value} });
+      return;
+    }
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <div className="container mrgnbtm">
         <div className="row">
           <div className="col-md-8">
-            <FormUser user={user} onChangeForm={onChangeForm} createUser={doCreateUser} updateUser={doUpdateUser} />
+            <FormUser user={user} onChangeForm={onChangeForm} createOrUpdateUser={createOrUpdateUser} insertUser={insertUser} />
           </div>
           <div className="col-md-4">
-            <DisplayBoard numberOfUsers={numberOfUsers} />
+            <DisplayBoard numberOfUsers={numberOfUsers.count} />
           </div>
         </div>
       </div>
       <div className="row mrgnbtm">
-        <Users users={users} doUpdateUser={doUpdateUser} setNumberOfUsers={setNumberOfUsers} setUser={setUser}></Users>
+        <Users users={users} insertUser={insertUser} setNumberOfUsers={setNumberOfUsers} setUser={setUser}/>
       </div>
     </div>
   );
