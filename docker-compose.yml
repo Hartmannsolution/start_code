@@ -16,6 +16,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongodb:27017/myapp
       - PORT=3080
+      - JWT_SECRET=mytopsecretsecret
   mongodb:
     image: mongo
     container_name: mongo-db

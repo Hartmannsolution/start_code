@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');  
 const bodyParser = require('body-parser');  
 const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 
 
 const User = require('./models/user'); 
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(express.json());
 app.use('/learningobjectives', learningObjectivesRouter);
 app.use('/api', usersRouter);
+app.use('/login', loginRouter);
 
 //
 // Create a new user in the database

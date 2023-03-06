@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -46,6 +47,20 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+UserSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
 const AddressSchema = new mongoose.Schema({
   street: String,
   city: String,
@@ -58,6 +73,6 @@ const AddressSchema = new mongoose.Schema({
 });
 
 const Address = mongoose.model('Address', AddressSchema);
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = {User, Address};

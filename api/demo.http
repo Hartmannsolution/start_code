@@ -1,20 +1,27 @@
 ###
+POST http://localhost:3080/login HTTP/1.1
+Content-Type: application/json
+
+{"email":"jf@mail.com","password":"JF123"}
+
+###
 POST http://localhost:3080/api/user HTTP/1.1
 Content-Type: application/json
 
-{"name":"Holger Danske den syvende","email":"any@mail.com","password":"FNLNexamplecom"}
+{"name":"Jesper Farekylling","email":"jf@mail.com","password":"JF123", "phone":{ "no":"12345678", "description":"mobile"}}
 
 ###
 POST http://localhost:3080/api/addressuser HTTP/1.1
 Content-Type: application/json
 
-{"name":"Helga Gargamod","email":"any4@mail.com","password":"FNLNexamplecom", "addressId":"6401bcf893414fd95f0b5772"}
+{"name":"Hulda Gargamod","email":"any5@mail.com","password":"FNLNexamplecom", "addressId":"6401bcf893414fd95f0b5772", , phone:{ "no":"12345678", "description":"mobile"}}
 
 ### 
 POST http://localhost:3080/api/address HTTP/1.1
 Content-Type: application/json
 
 {"street":"Hovedgaden 1","city":"København","zip":"1234","country":"Danmark", "addressId":"6401bcf893414fd95f0b5772"}
+
 ###
 GET http://localhost:3080/api/user HTTP/1.1
 Content-Type: application/json
@@ -39,3 +46,7 @@ PUT http://localhost:3080/api/user/6401c0a73dd8e84eff972c13 HTTP/1.1
 Content-Type: application/json
 
 {"name":"Holger Danske den 8nde","email":"somebody@mail.com","password":"passmeplease", "phone":{ "no":"12345678", "description":"mobile"}}
+
+###
+GET http://localhost:3080/api/protected HTTP/1.1
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDA2MTAwMjgyMzNiNTY5ZDM5ZDMwYjYiLCJuYW1lIjoiSmVzcGVyIEZhcmVreWxsaW5nIiwiaWF0IjoxNjc4MTIxNzUyLCJleHAiOjE2NzgxMjUzNTJ9.19ZXR_GMMCDxgMZ25OymUfNCFt6mlyG2c7odgVO1FG8

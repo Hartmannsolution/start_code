@@ -2,6 +2,27 @@ const express = require('express');
 const router = express.Router();
 const {User,Address} = require('../models/user');
 
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET; // Replace with your own secret key
+
+// Middleware function to verify JWT token
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'Access denied. No token provided.' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    console.log(decoded);
+    req.user = decoded; // Add decoded user information to the request object
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: 'Invalid token.' });
+  }
+};
+
+
 router.get('/user', (req, res) => {
     console.log("GETTING USERS: ",User);
   User.find((err, users) => {
@@ -111,6 +132,7 @@ router.post('/addressuser', async (req, res) => {
     const user = new User({
       name: req.body.name,
       email: req.body.email,
+      phone: req.body.phone,
       password: req.body.password,
       address: address._id,
     });
@@ -130,25 +152,6 @@ router.post('/addressuser', async (req, res) => {
   }
 });
 
-// router.put('/user/:id', async (req, res) => {
-//   const userId = req.params.id;
-//   const { name, email, password } = req.body;
-//   try {
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       return res.status(404).json({msg:'User not found'});
-//     }
-//     user.name = name;
-//     user.email = email;
-//     user.password = password;
-
-//     await user.save();
-//     res.send(user);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({msg:'Server error'});
-//   }
-// });
 router.put('/user/:id', async (req, res) => {
   const { id } = req.params;
   const updateDTO = req.body;
@@ -169,6 +172,11 @@ router.put('/user/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: `Failed to update user: ${err}` });
   }
+});
+
+// Protected endpoint:
+router.get('/protected', verifyToken,(req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;
