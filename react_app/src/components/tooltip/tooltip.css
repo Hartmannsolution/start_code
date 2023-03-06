@@ -1,17 +1,17 @@
-.cell {
+.parent {
   position: relative;
 }
 
-/* .tooltip { */
-  /* position: absolute;
+.mytooltip {
+  position: absolute;
   top: 30%;
-  left: 50%; */
-  /* border: 1px solid black;
+  left: 50%;
+  border: 1px solid black;
   transform: translateX(-50%);
   background-color: black;
   color: white;
   padding: 5px;
   border-radius: 5px;
   font-size: 12px;
-  white-space: nowrap; */
-/* } */
+  white-space: nowrap;
+}

@@ -3,7 +3,6 @@ import React from 'react'
 
 const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
 
-console.log('user: ', user);
     return(
         <div className="container">
             <div className="row">
@@ -34,7 +33,7 @@ console.log('user: ', user);
                             <input type="text" name="phone_type" onChange={(e) => onChangeForm(e)} value={user.phone?user.phone.description:''} className="form-control" id="password" />
                         </div>
                     </div>
-                    <button type="button" onClick= {(e) => createOrUpdateUser()} className="btn btn-danger">Create</button>
+                    <button type="button" onClick= {(e) => createOrUpdateUser()} className="btn mybutton">Create or Update User</button>
                 </form>
                 </div>
             </div>

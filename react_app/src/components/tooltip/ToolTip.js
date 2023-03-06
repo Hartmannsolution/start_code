@@ -5,7 +5,6 @@ const ToolTip = ({text,message}) => {
 const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseOver = () => {
-    console.log('WE ARE HERE !!!!!!!');
     setShowTooltip(true);
   };
 

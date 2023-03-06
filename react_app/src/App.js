@@ -21,17 +21,16 @@ const App = () => {
   const [numberOfUsers, setNumberOfUsers] = useState({count:0});
 
   const createOrUpdateUser = (e) => {
-    if(user._id) {
+    if(!user._id) { // create new user if user from the form has no id
+    createUser(user)
+      .then(response => {
+        setNumberOfUsers({...numberOfUsers, count: numberOfUsers.count + 1});
+      });
+    } else {
       console.log('update user with id: ', user._id);
       updateUser(user)
       .then(response => {
         setNumberOfUsers({...numberOfUsers});
-      });
-    }
-    else { // create new user if user from the form has no id
-    createUser(user)
-      .then(response => {
-        setNumberOfUsers({...numberOfUsers, count: numberOfUsers.count + 1});
       });
     }
   }
@@ -46,7 +45,7 @@ const App = () => {
     getAllUsersWithAdress()
       .then(users => {
         setUsers(users);
-        setNumberOfUsers({...numberOfUsers, count:users.length});
+        if(numberOfUsers.count === 0) setNumberOfUsers({...numberOfUsers, count:users.length});
       });
   }, [numberOfUsers]);
 

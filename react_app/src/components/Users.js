@@ -6,9 +6,7 @@ export const Users = ({users, insertUser, setNumberOfUsers }) => {
     if (users.length === 0) return null
 
     const doDeleteUser = async (e) => {
-        console.log('ID: ',e.target.id)
         const result = await deleteUser(e.target.id);
-        console.log('Delete result: ',result);
         setNumberOfUsers((numberOfUsers)=>numberOfUsers - 1);
     }
 
