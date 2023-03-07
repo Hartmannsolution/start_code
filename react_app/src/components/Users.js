@@ -13,7 +13,7 @@ export const Users = ({users, insertUser, setNumberOfUsers }) => {
     const UserRow = (user,index) => {
         const addressString = user.address? user.address.street + ', ' + user.address.zip + ', ' + user.address.city + ', ' + user.address.country : '';
         return(
-              <tr key = {index} className={index%2 === 0?'odd':'even'}>
+              <tr key = {user._id} className={index%2 === 0?'odd':'even'}>
                   <td>{index+1}</td>
                   <td>{user._id}</td>
                   <td>
@@ -22,6 +22,7 @@ export const Users = ({users, insertUser, setNumberOfUsers }) => {
                   <td>{user.email}</td>
                   <td>{user.phone?user.phone.no:''}</td>
                   <td>{user.password}</td>
+                  <td>{user.hobbies?user.hobbies.map(hobby=><span key={hobby}>{hobby}, </span>):''}</td>
                   <td><button id={user._id} onClick={insertUser}>edit</button><button id={user._id} onClick={doDeleteUser}>delete</button></td>
               </tr>
           )
@@ -41,6 +42,8 @@ export const Users = ({users, insertUser, setNumberOfUsers }) => {
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Password</th>
+                    <th>Hobbies</th>
+                    <th>Operations</th>
                 </tr>
                 </thead>
                 <tbody>

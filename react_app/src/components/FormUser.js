@@ -10,7 +10,6 @@ const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
             <div className="row">
                 <div className="col-md-7 mrgnbtm">
                 <h2>Create or update User</h2>
-                hobbies number: {numberOfHobbies}
                 <form>
                     <div className="row">
                         <div className="form-group col-md-6">
@@ -35,7 +34,8 @@ const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
                             <label htmlFor="phone_type">Phone Type</label>
                             <input type="text" name="phone_type" onChange={(e) => onChangeForm(e)} value={user.phone?user.phone.description:''} className="form-control" />
                         </div>
-                        <div className="row">
+                    </div>
+                    <div className="row">
                         <div className="form-group col-md-3">
                             {[...Array(numberOfHobbies)].map((e, i) =>{ 
                                 return (<div key={i}>Hobby {i+1}:
@@ -43,7 +43,17 @@ const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
                                 </div>)
                             })}
                         </div>
-
+                        <div className="form-group col-md-9">
+                            {showAddressForm && <div>
+                                <label htmlFor="street">Street</label>
+                                <input type="text" name="street" onChange={(e) => onChangeForm(e)} value={user.address?user.address.street:''} className="form-control" />
+                                <label htmlFor="city">City</label>
+                                <input type="text" name="city" onChange={(e) => onChangeForm(e)} value={user.address?user.address.city:''} className="form-control" />
+                                <label htmlFor="country">Country</label>
+                                <input type="text" name="country" onChange={(e) => onChangeForm(e)} value={user.address?user.address.country:''} className="form-control" />
+                                <label htmlFor="zip">Zip</label>
+                                <input type="text" name="zip" onChange={(e) => onChangeForm(e)} value={user.address?user.address.zip:''} className="form-control" />
+                            </div>}
                         </div>
                     </div>
                     <button type="button" onClick={(e) => createOrUpdateUser()} className="btn mybutton">Create or Update User</button>

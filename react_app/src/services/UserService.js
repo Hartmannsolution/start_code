@@ -23,6 +23,7 @@ export async function deleteUser(id) {
 }
 
 export async function createUser(user) {
+    console.log(user, "USER");
     const response = await fetch(`/api/user`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

@@ -11,6 +11,12 @@ Content-Type: application/json
 {"name":"Jesper Farekylling","email":"jf@mail.com","password":"JF123", "phone":{ "no":"12345678", "description":"mobile"}}
 
 ###
+POST http://localhost:3080/api/user HTTP/1.1
+Content-Type: application/json
+
+{"name":"Fætter Højben","email":"fh@mail.com","password":"FH123", "phone":{ "no":"38889999", "description":"mobile"}, "address":{ "street":"Hovedgaden 1","city":"København","zip":"1234","country":"Danmark"}}
+
+###
 POST http://localhost:3080/api/addressuser HTTP/1.1
 Content-Type: application/json
 

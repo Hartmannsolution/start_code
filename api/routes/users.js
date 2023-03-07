@@ -85,7 +85,7 @@ router.delete('/user/:id', async (req, res) => {
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(404).json({'msg':'User not found'});
     }
     await User.findByIdAndDelete(userId);
     res.json({msg: 'User deleted successfully'});
@@ -99,7 +99,15 @@ router.post('/user', async (req, res) => {
   try {
     const userData = req.body;
     console.log("USER: ",userData);
-    const newUser = new User(userData);
+    let newUser = null;
+    if(userData.hasOwnProperty('address')){
+      const newAddress = await Address.create(userData.address);
+      delete userData.address;
+      newUser = new User(userData);
+      newUser.address = newAddress._id;
+    } else {
+      newUser = new User(userData);
+    }
     await newUser.save();
     res.status(200).json({ success: true, msg: 'User saved successfully.' });
   } catch (err) {

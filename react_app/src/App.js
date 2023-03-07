@@ -15,7 +15,7 @@ import {
   logout
 } from './services/UserService'
 
-const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}, hobbies: [''], dateOfBirth: '', address: ''};
+const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}, hobbies: [''], dateOfBirth: '', address: {street:'', city:'', country:'', zip:''}};
 
 const App = () => {
   const [user, setUser] = useState(emptyUser);
@@ -25,6 +25,11 @@ const App = () => {
   const [username, setUsername] = useState('');
 
   const createOrUpdateUser = (e) => {
+    // check mandatory fields:
+    if(!user.name || !user.email || !user.password || !user.phone.no) {
+      alert('Please fill in all mandatory fields: name, email, password and phone number');
+      return;
+    }
     if(!user._id) { // create new user if user from the form has no id
     createUser(user)
       .then(response => {
@@ -63,11 +68,18 @@ const App = () => {
       setUser({ ...user, phone: {...user.phone, description: e.target.value} });
       return;
     }
+    // name format on the form fields are hobby-0, hobby-1, hobby-2, etc.
     if(e.target.name.startsWith('hobby')) {
-      const hobbyNo = e.target.name.split('-')[1]
+      const hobbyNo = e.target.name.split('-')[1];
+      if(!user.hasOwnProperty('hobbies')) user.hobbies = [];
       user.hobbies[hobbyNo] = e.target.value;
       setUser({ ...user, hobbies: user.hobbies });
       console.log('hobby: ', e.target.name, e.target.value);
+      return;
+    }
+    if(['street','city','country','zip'].includes(e.target.name)) {
+      setUser({ ...user, address: {...user.address, [e.target.name]: e.target.value} });
+      return;
     }
     setUser({ ...user, [e.target.name]: e.target.value });
   }
