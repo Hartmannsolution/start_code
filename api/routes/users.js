@@ -162,6 +162,10 @@ router.post('/addressuser', async (req, res) => {
 
 router.put('/user/:id', async (req, res) => {
   const { id } = req.params;
+  // https://stackoverflow.com/a/69495707 
+  // Remove the version key from the update DTO (if present) to avoid a version conflict error when saving to the database below (see https://mongoosejs.com/docs/faq.html#versionkey)
+  // Better way would be to reload the user client side when updating, but this is a quick fix. 
+  delete req.body.__v; 
   const updateDTO = req.body;
 
   try {

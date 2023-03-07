@@ -1,9 +1,26 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 
-const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
+const FormUser = ({onChangeForm, createOrUpdateUser, user, resetForm }) => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [numberOfHobbies, setNumberOfHobbies] = useState(0);
+
+    const reset = (e) => {
+        e.preventDefault();
+        resetForm(e);
+        setNumberOfHobbies(0);
+        setShowAddressForm(false);
+    }
+
+    useEffect(() => {
+        if(user.hobbies) {
+            setNumberOfHobbies(user.hobbies.length);
+        }
+        if(user.address && user.address.street) {
+            setShowAddressForm(true);
+        }
+    }, [user]);
+
 
     return(
         <div className="container">
@@ -59,6 +76,7 @@ const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
                     <button type="button" onClick={(e) => createOrUpdateUser()} className="btn mybutton">Create or Update User</button>
                     <button type="button" onClick={()=>setShowAddressForm(!showAddressForm)} className="btn mybutton">Add Address</button>
                     <button type="button" onClick={()=>setNumberOfHobbies(numberOfHobbies+1)} className="btn mybutton">Add Hobby</button>
+                    <button type="button" onClick={reset} className="btn mybutton">Reset Form</button>
                 </form>
                 </div>
             </div>

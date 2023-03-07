@@ -15,7 +15,7 @@ import {
   logout
 } from './services/UserService'
 
-const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}, hobbies: [''], dateOfBirth: '', address: {street:'', city:'', country:'', zip:''}};
+const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}, hobbies: [], dateOfBirth: '', address: {street:'', city:'', country:'', zip:''}};
 
 const App = () => {
   const [user, setUser] = useState(emptyUser);
@@ -42,12 +42,18 @@ const App = () => {
         setNumberOfUsers({...numberOfUsers});
       });
     }
+    resetForm(e);
   }
 
   const insertUser = (e) => {
     e.preventDefault();
     const editUser = users.find(user => user._id === e.target.id);
     setUser(editUser);
+  }
+
+  const resetForm = (e) => {
+    e.preventDefault();
+    setUser(emptyUser);
   }
 
   useEffect(() => {
@@ -105,7 +111,7 @@ const App = () => {
       <div className="container mrgnbtm">
         <div className="row">
           <div className="col-md-8">
-            <FormUser user={user} onChangeForm={onChangeForm} createOrUpdateUser={createOrUpdateUser} insertUser={insertUser} />
+            <FormUser user={user} onChangeForm={onChangeForm} createOrUpdateUser={createOrUpdateUser} resetForm={resetForm} />
           </div>
           <div className="col-md-4">
             <DisplayBoard numberOfUsers={numberOfUsers.count} />
