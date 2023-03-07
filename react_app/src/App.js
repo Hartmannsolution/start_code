@@ -10,15 +10,19 @@ import {
   getAllUsersWithAdress,
   // getUserById,
   createUser,
-  updateUser
+  updateUser,
+  login,
+  logout
 } from './services/UserService'
 
-const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}};
+const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}, hobbies: [''], dateOfBirth: '', address: ''};
 
 const App = () => {
   const [user, setUser] = useState(emptyUser);
   const [users, setUsers] = useState([]);
   const [numberOfUsers, setNumberOfUsers] = useState({count:0});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
 
   const createOrUpdateUser = (e) => {
     if(!user._id) { // create new user if user from the form has no id
@@ -59,12 +63,33 @@ const App = () => {
       setUser({ ...user, phone: {...user.phone, description: e.target.value} });
       return;
     }
+    if(e.target.name.startsWith('hobby')) {
+      const hobbyNo = e.target.name.split('-')[1]
+      user.hobbies[hobbyNo] = e.target.value;
+      setUser({ ...user, hobbies: user.hobbies });
+      console.log('hobby: ', e.target.name, e.target.value);
+    }
     setUser({ ...user, [e.target.name]: e.target.value });
+  }
+
+  const doLogin = (email, password) => {
+    console.log('doLogin: ', email, password  );
+    login(email, password, (name) => {
+      setLoggedIn(true);
+      console.log('logged in as: ', name);
+      setUsername(name);
+    });
+  }
+
+  const doLogOut = () => {
+    setLoggedIn(false);
+    setUsername('');
+    logout();
   }
 
   return (
     <div className="App">
-      <Header />
+      <Header doLogin={doLogin} loggedIn={loggedIn} username={username} doLogOut={doLogOut}/>
       <div className="container mrgnbtm">
         <div className="row">
           <div className="col-md-8">

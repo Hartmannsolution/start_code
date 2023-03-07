@@ -176,7 +176,11 @@ router.put('/user/:id', async (req, res) => {
 
 // Protected endpoint:
 router.get('/protected', verifyToken,(req, res) => {
-  res.json(req.user);
+  const response = {
+    message: 'This is a protected endpoint!',
+    user: req.user,
+  };
+  res.json(response);
 });
 
 module.exports = router;

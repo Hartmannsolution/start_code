@@ -1,13 +1,16 @@
-import React from 'react'
+import {useState} from 'react'
 
 
 const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
+    const [showAddressForm, setShowAddressForm] = useState(false);
+    const [numberOfHobbies, setNumberOfHobbies] = useState(0);
 
     return(
         <div className="container">
             <div className="row">
                 <div className="col-md-7 mrgnbtm">
                 <h2>Create or update User</h2>
+                hobbies number: {numberOfHobbies}
                 <form>
                     <div className="row">
                         <div className="form-group col-md-6">
@@ -26,14 +29,26 @@ const FormUser = ({onChangeForm, createOrUpdateUser, user }) => {
                         </div>
                         <div className="form-group col-md-3">
                             <label htmlFor="phone">Phone</label>
-                            <input type="text" name="phone" onChange={(e) => onChangeForm(e)} value={user.phone?user.phone.no:''} className="form-control" id="password" />
+                            <input type="text" name="phone" onChange={(e) => onChangeForm(e)} value={user.phone?user.phone.no:''} className="form-control" />
                         </div>
                         <div className="form-group col-md-3">
                             <label htmlFor="phone_type">Phone Type</label>
-                            <input type="text" name="phone_type" onChange={(e) => onChangeForm(e)} value={user.phone?user.phone.description:''} className="form-control" id="password" />
+                            <input type="text" name="phone_type" onChange={(e) => onChangeForm(e)} value={user.phone?user.phone.description:''} className="form-control" />
+                        </div>
+                        <div className="row">
+                        <div className="form-group col-md-3">
+                            {[...Array(numberOfHobbies)].map((e, i) =>{ 
+                                return (<div key={i}>Hobby {i+1}:
+                                    <input type="text" name={`hobby-${i}`} onChange={(e) => onChangeForm(e)} value={user.hobbies?user.hobbies[i]:''} className="form-control" />
+                                </div>)
+                            })}
+                        </div>
+
                         </div>
                     </div>
-                    <button type="button" onClick= {(e) => createOrUpdateUser()} className="btn mybutton">Create or Update User</button>
+                    <button type="button" onClick={(e) => createOrUpdateUser()} className="btn mybutton">Create or Update User</button>
+                    <button type="button" onClick={()=>setShowAddressForm(!showAddressForm)} className="btn mybutton">Add Address</button>
+                    <button type="button" onClick={()=>setNumberOfHobbies(numberOfHobbies+1)} className="btn mybutton">Add Hobby</button>
                 </form>
                 </div>
             </div>

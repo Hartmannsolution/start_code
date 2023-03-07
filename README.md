@@ -32,3 +32,6 @@ Url | Method | Description
 /add | POST | Create new user
 /:id | PUT | Update user by id
 /:id | DELETE | Delete user by id
+
+## JWT token
+There is a branch: jwt on git where jwt is implemented on the backend. In routes/login.js is the login endpoint and in routes/users.js is the authentication middleware where the token is verified on a protected route.
