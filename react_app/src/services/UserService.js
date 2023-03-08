@@ -52,9 +52,23 @@ export async function login(email, password, cb) {
     console.log(data)
     localStorage.setItem('token', data.token);
     const decodedToken = jwt_decode(data.token);
+    localStorage.setItem('name', decodedToken.name);
     cb(decodedToken.name);
+}
+export async function checkToken() {
+    const response = await fetch(`/api/token`, {
+        method: 'GET',
+        headers: {'authorization': localStorage.getItem('token')}
+    });
+    const res = await response.json();
+    if(res.message === "valid") {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 export async function logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
 }

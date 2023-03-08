@@ -12,7 +12,8 @@ import {
   createUser,
   updateUser,
   login,
-  logout
+  logout, 
+  checkToken
 } from './services/UserService'
 
 const emptyUser = { name: '', email: '', password: '',phone: {no: '', description: ''}, hobbies: [], dateOfBirth: '', address: {street:'', city:'', country:'', zip:''}};
@@ -24,7 +25,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
 
-  const createOrUpdateUser = (e) => {
+  const createOrUpdateUser = () => {
     // check mandatory fields:
     if(!user.name || !user.email || !user.password || !user.phone.no) {
       alert('Please fill in all mandatory fields: name, email, password and phone number');
@@ -42,7 +43,7 @@ const App = () => {
         setNumberOfUsers({...numberOfUsers});
       });
     }
-    resetForm(e);
+    resetForm();
   }
 
   const insertUser = (e) => {
@@ -51,8 +52,7 @@ const App = () => {
     setUser(editUser);
   }
 
-  const resetForm = (e) => {
-    e.preventDefault();
+  const resetForm = () => {
     setUser(emptyUser);
   }
 
@@ -63,6 +63,15 @@ const App = () => {
         if(numberOfUsers.count === 0) setNumberOfUsers({...numberOfUsers, count:users.length});
       });
   }, [numberOfUsers]);
+
+  useEffect(() => {
+    if(localStorage.getItem('token') && checkToken()) {
+      setLoggedIn(true);
+      setUsername(localStorage.getItem('name'));
+    } else {
+      logout();
+    }
+  }, []);
 
   const onChangeForm = (e) => {
     e.preventDefault();

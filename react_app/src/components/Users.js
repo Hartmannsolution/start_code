@@ -11,7 +11,7 @@ export const Users = ({users, insertUser, setNumberOfUsers }) => {
     }
 
     const UserRow = (user,index) => {
-        const addressString = user.address? user.address.street + ', ' + user.address.zip + ', ' + user.address.city + ', ' + user.address.country : '';
+        const addressString = user.address && user.address.street? user.address.street + ', ' + user.address.zip + ', ' + user.address.city + ', ' + user.address.country : '';
         return(
               <tr key = {user._id} className={index%2 === 0?'odd':'even'}>
                   <td>{index+1}</td>

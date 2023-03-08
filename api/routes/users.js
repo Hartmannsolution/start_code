@@ -195,4 +195,12 @@ router.get('/protected', verifyToken,(req, res) => {
   res.json(response);
 });
 
+// validate token:
+router.get('/validatetoken', verifyToken,(req, res) => {
+  const response = {
+    message: 'valid',
+  };
+  res.json(response);
+});
+
 module.exports = router;
