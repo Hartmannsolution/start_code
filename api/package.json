@@ -1,7 +1,7 @@
 {
   "name": "react-nodejs-example",
   "version": "1.0.0",
-  "description": "example project react with nodejs",
+  "description": "example project react with node typescript and mongodb",
   "main": "server.js",
   "scripts": {
     "start": "node server.bundle.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bbachi/react-nodejs-example.git"
+    "url": "https://github.com/HartmannSolution/start_code.git"
   },
-  "author": "Bhargav Bachina",
+  "author": "Thomas Hartmann",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bbachi/react-nodejs-example/issues"
+    "url": "https://github.com/HartmannSolution/start_code/issues"
   },
-  "homepage": "https://github.com/bbachi/react-nodejs-example#readme",
+  "homepage": "https://github.com/HartmannSolution/start_code/README.md",
   "dependencies": {
     "apollo-server-express": "^3.12.0",
     "bcrypt": "^5.1.0",
@@ -32,11 +32,22 @@
     "passport-jwt": "^4.0.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.0",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "^18.15.5",
+    "@typescript-eslint/parser": "^5.56.0",
     "del": "7.0.0",
     "fancy-log": "^2.0.0",
     "gulp": "^4.0.2",
     "gulp-zip": "^5.1.0",
     "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.2",
     "webpack": "5.75.0",
     "webpack-cli": "5.0.1",
     "webpack-stream": "7.0.0"
