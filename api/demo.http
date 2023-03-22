@@ -47,7 +47,7 @@ GET http://localhost:3080/api/address/6401bcf893414fd95f0b5772/users HTTP/1.1
 Content-Type: application/json
 
 ###
-GET http://localhost:3080/api/userswithaddress HTTP/1.1
+GET http://localhost:3080/api/user/withaddress HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -67,4 +67,8 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDA2MTAwMjgy
 GET http://localhost:3080/api/validatetoken HTTP/1.1
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDA3NzhlYzc4MDc4NTIzMWUyYWMyMGUiLCJuYW1lIjoiSG9sZ2VyIiwiaWF0IjoxNjc4MjU5ODM5LCJleHAiOjE2NzgyNjM0Mzl9.aF63__MaPNGZ0O30fpSWBtl0kSyERdoKoObK9l3kDVg
 # authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDA2MTAwMjgyMzNiNTY5ZDM5ZDMwYjYiLCJuYW1lIjoiSmVzcGVyIEZhcmVreWxsaW5nIiwiaWF0IjoxNjc4MTIxNzUyLCJleHAiOjE2NzgxMjUzNTJ9.19ZXR_GMMCDxgMZ25OymUfNCFt6mlyG2c7odgVO1FG8
+
+###
+GET http://localhost:3080/api/test_refresh HTTP/1.1
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDA3NzhlYzc4MDc4NTIzMWUyYWMyMGUiLCJuYW1lIjoiSG9sZ2VyIiwiaWF0IjoxNjc4MjgzMTU5LCJleHAiOjE2NzgyODQ5NTl9.dcQkRU6dGgOqVVzw5OtevygUca03MRSWC_-UhhLcNQA
 

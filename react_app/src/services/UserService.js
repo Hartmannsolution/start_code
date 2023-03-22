@@ -6,7 +6,12 @@ export async function getAllUsers() {
 }
 
 export async function getAllUsersWithAdress() {
-    const response = await fetch(`/api/userswithaddress`);
+    const response = await fetch(`/api/user/withaddress`);
+    const authHeader = await response.headers.get('authorization');
+    if(authHeader){
+        console.log('AUTHENTICATION HEADER: ',authHeader);
+        localStorage.setItem('token', authHeader);
+    }
     return await response.json();
 }
 
@@ -56,7 +61,7 @@ export async function login(email, password, cb) {
     cb(decodedToken.name);
 }
 export async function checkToken() {
-    const response = await fetch(`/api/token`, {
+    const response = await fetch(`/api/validatetoken`, {
         method: 'GET',
         headers: {'authorization': localStorage.getItem('token')}
     });

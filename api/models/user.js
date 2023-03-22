@@ -41,9 +41,8 @@ const UserSchema = new mongoose.Schema({
   phone: {
     description: String,
     no: {
-      type: String,
-      required: true
-    },
+      type: String
+    }
   }
 });
 

@@ -39,14 +39,14 @@ async function selectStuff() {
     });
 
     // mix of regex and string searches
-    const excludedNames = ['Jack Smith', 'Jane Doe', 'John Doe', 'Holger Danske den syvende','daniel',/victor/i,/hans/i];
+    const excludedNames = ['Jack Smith', 'Jane Doe', 'John Doe', 'Holger Danske den syvende', 'daniel', /victor/i, /hans/i];
     const query2 = { name: { $nin: excludedNames } };
 
     User.find(query2, (err, users) => {
         if (err) {
             console.error(err);
         } else {
-            console.log('Users not in the list: ',users);
+            console.log('Users not in the list: ', users);
         }
     });
 
@@ -81,5 +81,35 @@ async function createUser() {
         }
     });
     await user.save();
+}
+
+async function findStudent(userId) {
+    const User = require('./models/user');
+    const Student = require('./models/student');
+    // First, find the user by their ID
+    User.findById(userId)
+        .populate('student') // Populate the 'student' field in the User model
+        .exec((err, user) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            // Once we have the user, we can access the student object and its learning objectives
+            const student = user.student;
+            if (student) {
+                Student.findById(student._id)
+                    .populate('learningObjectives') // Populate the 'learningObjectives' field in the Student model
+                    .exec((err, populatedStudent) => {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        // Here, we have the populated student object with all its learning objectives
+                        console.log(populatedStudent);
+                    });
+            }
+        });
+
 }
 

@@ -34,4 +34,5 @@ Url | Method | Description
 /:id | DELETE | Delete user by id
 
 ## JWT token
-There is a branch: jwt on git where jwt is implemented on the backend. In routes/login.js is the login endpoint and in routes/users.js is the authentication middleware where the token is verified on a protected route.
+jwt is implemented on the backend. In routes/login.js is the login endpoint and in routes/users.js is the authentication middleware where the token is verified on a protected route.
+- Also added a middleware to verify and refresh the token. So there is a middleware that just validates the token and another that will refresh the token if it expires within 1 minute. It then attaches a new token to the response header: authorization.

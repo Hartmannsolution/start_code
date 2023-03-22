@@ -69,6 +69,7 @@ const App = () => {
       setLoggedIn(true);
       setUsername(localStorage.getItem('name'));
     } else {
+      console.log('LOGOUT');
       logout();
     }
   }, []);
